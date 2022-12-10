@@ -7,6 +7,7 @@ public class IdleMovement : MonoBehaviour
 
     public bool setTrigger = false;
 
+    public Vector2 edgeColliderPos;
     public PhysicsMaterial2D inIdleMovementMaterial;
     bool incollider;
     // public GridController gridController;
@@ -26,6 +27,7 @@ public class IdleMovement : MonoBehaviour
         {
             GetComponent<Collider2D>().isTrigger = false;
             GetComponent<Collider2D>().sharedMaterial = inIdleMovementMaterial;
+            GetComponent<Collider2D>().offset = edgeColliderPos;
             gameObject.layer = LayerMask.NameToLayer("unit");
 
         }

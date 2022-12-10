@@ -21,7 +21,7 @@ public class IdleMovementManger : MonoBehaviour
             float y = radius * Mathf.Sin(angle);
 
             points[i] = new Vector2(x, y);
-            Debug.Log("fas");
+
 
         }
 

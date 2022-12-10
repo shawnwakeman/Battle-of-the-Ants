@@ -17,6 +17,8 @@ public class MovementManager : MonoBehaviour
     
     IdleMovement idleMovement;
 
+    bool crossed = false;
+
     [Range(1, 10)]
     public float maxSpeed;
 
@@ -46,28 +48,29 @@ public class MovementManager : MonoBehaviour
             objectAvoidence = unit.GetComponent<ObjectAvoidence>();
             agentRB = unit.GetComponent<Rigidbody2D>();
             idleMovement = unit.GetComponent<IdleMovement>();
+
             if (gridController.destinationCell != null)
+            {
+                if (Vector2.Distance(agentRB.position, gridController.destinationCell.worldPos) > 3)
                 {
-                    if (Vector2.Distance(agentRB.position , gridController.destinationCell.worldPos) > 3)
-                    {
 
-                        flowFieldSteer.FlowFieldMovment();
-                            
-                    }
-                    else
-                    {
-                        if (idleMovement.setTrigger != true)
-                        {
-                            idleMovement.setTrigger = true;
-                            unit.GetComponent<Collider2D>().isTrigger = true;                            
-                        }
+                    flowFieldSteer.FlowFieldMovment();
 
-                    }                
                 }
+                else
+                {
+                    if (idleMovement.setTrigger != true)
+                    {
+                        idleMovement.setTrigger = true;
+                        unit.GetComponent<Collider2D>().isTrigger = true;
 
-            
+                    }
 
 
+                    orbit();
+
+                }
+            }
             // objectAvoidence.GetAvoidenceVelocity();
             flowFieldSteer.RotateToVelocity();
             speedLimiter(agentRB);
@@ -88,6 +91,19 @@ public class MovementManager : MonoBehaviour
             agentRB.velocity = agentRB.velocity.normalized * maxSpeed;
             
         }
+    }
+
+    public void orbit()
+    {
+        float radius = 3f;  // The radius of the circular path
+        float speed = 5f;   // The speed at which the object moves along the path
+        // Calculate the x and y components of the force to apply
+        float xForce = Mathf.Sin(Time.time * speed) * radius;
+        float yForce = Mathf.Cos(Time.time * speed) * radius;
+
+        // Apply the force to the Rigidbody2D
+        agentRB.AddForce(new Vector2(xForce, yForce));
+
     }
     public void InstantiateNewUnit()
     {

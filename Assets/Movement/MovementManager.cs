@@ -43,6 +43,7 @@ public class MovementManager : MonoBehaviour
             mousePos.z = Camera.main.nearClipPlane;
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
             GameObject newUnit = Instantiate(unitPrefab, worldPosition, Quaternion.Euler(0,0,0));
+            newUnit.GetComponent<IdleMovement>().gridController = gridController;
             newUnit.GetComponent<TransitionMovement>().gridController = gridController;
             newUnit.transform.parent = gameObject.transform;
             unitList.Add(newUnit);

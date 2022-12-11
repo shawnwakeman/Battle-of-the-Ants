@@ -28,18 +28,19 @@ public class TransitionMovement : MonoBehaviour
     public void FlowFieldMovment()
     {
         
-        if (gridController.currentFlowField == null || unitState.currentStateInt == UnitState.uState.idle) { return; }
+        if (gridController.currentFlowField == null || unitState.currentStateInt == UnitState.uState.calculatingIdle) { return; }
 
         if (Vector2.Distance(gridController.worldPosition, agentRB.position + agentRB.velocity) < 1) // might want to chage later
         {
-            Debug.Log(Vector2.Distance(gridController.worldPosition, agentRB.position));
-            Debug.Log(agentRB.position);
-            Debug.Log(gridController.worldPosition);
-            unitState.SetState(UnitState.uState.idle);
+
+            unitState.SetState(UnitState.uState.calculatingIdle);
+            Debug.Log("set calc idle");
+
         }
 
         if (unitState.currentStateInt == UnitState.uState.transition)
         {
+            Debug.Log("T");
             Cell cellBelow = gridController.currentFlowField.GetCellFromWorldPos(agentRB.position);
             Vector2 moveDirection = new Vector2(cellBelow.bestDirection.Vector.x, cellBelow.bestDirection.Vector.y);
             agentRB.AddForce(moveDirection * flowFieldSpeed);

@@ -6,6 +6,7 @@ public class TransitionMovement : MonoBehaviour
 {
     public GridController gridController;
 
+    public UnitState unitState;
     public Rigidbody2D agentRB;
     public float flowFieldSpeed;
     public float maxTransitionSpeed;
@@ -21,20 +22,32 @@ public class TransitionMovement : MonoBehaviour
     private void Update() 
     {
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0,0,
-                                             AngleBetweenVector2(agentRB.position, agentRB.position + agentRB.velocity*5)), rotation_speed * Time.deltaTime);
+                                             AngleBetweenVector2(agentRB.position, agentRB.position + agentRB.velocity)), rotation_speed * Time.deltaTime);
         
     }
     public void FlowFieldMovment()
     {
         
-        if (gridController.currentFlowField == null) { return; }
-        Cell cellBelow = gridController.currentFlowField.GetCellFromWorldPos(agentRB.position);
-        Vector2 moveDirection = new Vector2(cellBelow.bestDirection.Vector.x, cellBelow.bestDirection.Vector.y);
-        Vector2 force = speedLimiter(moveDirection * flowFieldSpeed);
-        agentRB.AddForce(force);
+        if (gridController.currentFlowField == null || unitState.currentStateInt == UnitState.uState.idle) { return; }
+
+        if (Vector2.Distance(gridController.worldPosition, agentRB.position + agentRB.velocity) < 1) // might want to chage later
+        {
+            Debug.Log(Vector2.Distance(gridController.worldPosition, agentRB.position));
+            Debug.Log(agentRB.position);
+            Debug.Log(gridController.worldPosition);
+            unitState.SetState(UnitState.uState.idle);
+        }
+
+        if (unitState.currentStateInt == UnitState.uState.transition)
+        {
+            Cell cellBelow = gridController.currentFlowField.GetCellFromWorldPos(agentRB.position);
+            Vector2 moveDirection = new Vector2(cellBelow.bestDirection.Vector.x, cellBelow.bestDirection.Vector.y);
+            agentRB.AddForce(moveDirection * flowFieldSpeed);
+            speedLimiter(agentRB);
+           
+        }
 
 
-        
 
     }
 
@@ -57,14 +70,14 @@ public class TransitionMovement : MonoBehaviour
     return (Vector2.Angle(Vector2.right, diference) * sign);
     }
 
-    private Vector2 speedLimiter(Vector2 agentRb)
+    private void speedLimiter(Rigidbody2D agentRB)
     {
         if (agentRB.velocity.sqrMagnitude >= maxTransitionSpeed*maxTransitionSpeed)
         {
-            return agentRB.velocity = agentRB.velocity.normalized * maxTransitionSpeed;
+            agentRB.velocity = agentRB.velocity.normalized * maxTransitionSpeed;
             
         }
-        return agentRb;
+        
     }
 }
 

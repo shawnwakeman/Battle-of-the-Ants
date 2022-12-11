@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class movement : MonoBehaviour
 {
+    public MovementManager movementManager;
     private float x_vel;
     private float y_vel;
     public float speed;

@@ -13,10 +13,11 @@ public class GridDebug : MonoBehaviour
     private FlowField curFlowField;
  
     private Sprite[] ffIcons;
- 
+
     private void Start()
     {
         ffIcons = Resources.LoadAll<Sprite>("Sprites/FFicons");
+        
     }
  
     public void SetFlowField(FlowField newFlowField)

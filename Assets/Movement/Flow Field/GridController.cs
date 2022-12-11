@@ -10,8 +10,9 @@ public class GridController : MonoBehaviour
     public FlowField currentFlowField;
     public Cell destinationCell;
     public GridDebug gridDebug;
-    
 
+    [HideInInspector]
+    public Vector3 worldPosition;
 
     public void InitializeFlowField()
     {
@@ -33,7 +34,7 @@ public class GridController : MonoBehaviour
 
             Vector3 mousePos = Input.mousePosition;
             mousePos.z = Camera.main.nearClipPlane;
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
+            worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
             destinationCell = currentFlowField.GetCellFromWorldPos(worldPosition);
             currentFlowField.CreateIntegrationField(destinationCell);
 
@@ -46,4 +47,3 @@ public class GridController : MonoBehaviour
         
     }
 }
- 

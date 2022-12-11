@@ -8,6 +8,8 @@ public class MovementManager : MonoBehaviour
     public GridController gridController;
     public GameObject unitPrefab;
 
+
+
     void Start()
     {
         foreach ( Transform unit in transform)
@@ -26,9 +28,10 @@ public class MovementManager : MonoBehaviour
 
     void Update()
     {
+
+
         InstantiateNewUnit();
     }
-
 
 
 
@@ -47,3 +50,4 @@ public class MovementManager : MonoBehaviour
         }
     }
 }
+

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -8934450350225043651}
   - component: {fileID: 32087185599675386}
   - component: {fileID: -1137817185179290080}
+  - component: {fileID: -5720519171341835443}
   m_Layer: 0
   m_Name: Unit (1)
   m_TagString: unit
@@ -118,7 +119,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 1
   m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -155,10 +156,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a48282680dd55a4ca7640638da0fd4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  setTrigger: 0
-  inIdleMovementMaterial: {fileID: 0}
-  closestPoint: {x: 0, y: 0}
-  readyForOrbit: 0
+  unitState: {fileID: -5720519171341835443}
+  speed: 0
+  rotation_speed: 0
+  lerp_speed: 0
 --- !u!114 &-1137817185179290080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,7 +173,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridController: {fileID: 0}
+  unitState: {fileID: -5720519171341835443}
   agentRB: {fileID: 4496264458555330903}
-  flowFieldSpeed: 1
+  flowFieldSpeed: 2
   maxTransitionSpeed: 2
-  rotation_speed: 1
+  rotation_speed: 2
+--- !u!114 &-5720519171341835443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4496264458555330898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d59b0f1bc82a3a42a2f58eaaaa67c8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentStateInt: 1

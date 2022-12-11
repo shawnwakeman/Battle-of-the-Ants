@@ -5,7 +5,7 @@ using UnityEngine;
 public class IdleMovementManger : MonoBehaviour
 {
 
-
+    public Vector2 edgeColliderPos;
     public EdgeCollider2D edgeCollider;
 
 
@@ -29,6 +29,7 @@ public class IdleMovementManger : MonoBehaviour
         edgeCollider.transform.position = new Vector3(0, 0, 0);
         edgeCollider.points = points;
         edgeCollider.offset = worldpos;
+        edgeColliderPos = edgeCollider.offset;
     }
 
     public void SetColliderWorldPos(Vector3 worldpos)
@@ -36,3 +37,4 @@ public class IdleMovementManger : MonoBehaviour
         edgeCollider.offset = worldpos;
     }
 }
+            

@@ -734,8 +734,6 @@ MonoBehaviour:
   gridSize: {x: 26, y: 13}
   cellRadius: 0.37
   gridDebug: {fileID: 633830653}
-  worldPosition: {x: 0, y: 0, z: 0}
-  idlecolliderprefab: {fileID: 4594775194690719148, guid: cd6dc57aa26b75a419f4ab942027b849, type: 3}
 --- !u!4 &1078016062
 Transform:
   m_ObjectHideFlags: 0
@@ -1057,4 +1055,3 @@ MonoBehaviour:
   unitList: []
   gridController: {fileID: 1078016061}
   unitPrefab: {fileID: 4496264458555330898, guid: f375d99127f9f46409735bae1471dfae, type: 3}
-  maxSpeed: 2.03

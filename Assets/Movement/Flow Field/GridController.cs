@@ -10,8 +10,8 @@ public class GridController : MonoBehaviour
     public FlowField currentFlowField;
     public Cell destinationCell;
     public GridDebug gridDebug;
-    public Vector3 worldPosition;
-    public GameObject idlecolliderprefab;
+    
+
 
     public void InitializeFlowField()
     {
@@ -33,15 +33,12 @@ public class GridController : MonoBehaviour
 
             Vector3 mousePos = Input.mousePosition;
             mousePos.z = Camera.main.nearClipPlane;
-            worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
             destinationCell = currentFlowField.GetCellFromWorldPos(worldPosition);
             currentFlowField.CreateIntegrationField(destinationCell);
 
             currentFlowField.CreateFlowField();
 
-            GameObject idlecollider = Instantiate(idlecolliderprefab);
-            idlecollider.transform.parent = gameObject.transform;
-            idlecollider.GetComponent<IdleMovementManger>().GenerateCollider(worldPosition, 30, 1f);
 
 
 

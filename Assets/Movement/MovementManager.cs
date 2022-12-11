@@ -5,22 +5,8 @@ using UnityEngine;
 public class MovementManager : MonoBehaviour
 {
     public List<GameObject> unitList = new List<GameObject>();
-
     public GridController gridController;
-    private float unitCounter = 1;
     public GameObject unitPrefab;
-
-    FlowFieldSteer flowFieldSteer;
-    ObjectAvoidence objectAvoidence;
-    Rigidbody2D agentRB;
-    Collider2D idleCircle;
-    
-    IdleMovement idleMovement;
-
-    bool crossed = false;
-
-    [Range(1, 10)]
-    public float maxSpeed;
 
     void Start()
     {
@@ -41,70 +27,11 @@ public class MovementManager : MonoBehaviour
     void Update()
     {
         InstantiateNewUnit();
-        if (unitList.Count == 0) { return; }
-        foreach(GameObject unit in unitList)
-        {
-            flowFieldSteer = unit.GetComponent<FlowFieldSteer>();
-            objectAvoidence = unit.GetComponent<ObjectAvoidence>();
-            agentRB = unit.GetComponent<Rigidbody2D>();
-            idleMovement = unit.GetComponent<IdleMovement>();
-
-            if (gridController.destinationCell != null)
-            {
-                if (Vector2.Distance(agentRB.position, gridController.destinationCell.worldPos) > 3)
-                {
-
-                    flowFieldSteer.FlowFieldMovment();
-
-                }
-                else
-                {
-                    if (idleMovement.setTrigger != true)
-                    {
-                        idleMovement.setTrigger = true;
-                        unit.GetComponent<Collider2D>().isTrigger = true;
-
-                    }
-
-
-                    orbit();
-
-                }
-            }
-            // objectAvoidence.GetAvoidenceVelocity();
-            flowFieldSteer.RotateToVelocity();
-            speedLimiter(agentRB);
-        }
     }
 
 
 
-    public Vector2 GetDirectionVector2D(float angle)
-    {
-         return new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)).normalized;
-    }
 
-    private void speedLimiter(Rigidbody2D agentRb)
-    {
-        if (agentRB.velocity.sqrMagnitude >= maxSpeed*maxSpeed)
-        {
-            agentRB.velocity = agentRB.velocity.normalized * maxSpeed;
-            
-        }
-    }
-
-    public void orbit()
-    {
-        float radius = 3f;  // The radius of the circular path
-        float speed = 5f;   // The speed at which the object moves along the path
-        // Calculate the x and y components of the force to apply
-        float xForce = Mathf.Sin(Time.time * speed) * radius;
-        float yForce = Mathf.Cos(Time.time * speed) * radius;
-
-        // Apply the force to the Rigidbody2D
-        agentRB.AddForce(new Vector2(xForce, yForce));
-
-    }
     public void InstantiateNewUnit()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -112,15 +39,11 @@ public class MovementManager : MonoBehaviour
             Vector3 mousePos = Input.mousePosition;
             mousePos.z = Camera.main.nearClipPlane;
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
-
             GameObject newUnit = Instantiate(unitPrefab, worldPosition, Quaternion.Euler(0,0,0));
-            newUnit.GetComponent<FlowFieldSteer>().gridController = gridController;
-            unitCounter++;
+            newUnit.GetComponent<TransitionMovement>().gridController = gridController;
+            newUnit.transform.parent = gameObject.transform;
             unitList.Add(newUnit);
 
         }
     }
-
-
-
 }

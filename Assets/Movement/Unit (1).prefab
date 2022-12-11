@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 4496264458555330905}
   - component: {fileID: 4496264458555330904}
   - component: {fileID: 4496264458555330903}
-  - component: {fileID: 4496264458555330900}
   - component: {fileID: -8934450350225043651}
   - component: {fileID: 32087185599675386}
+  - component: {fileID: -1137817185179290080}
   m_Layer: 0
   m_Name: Unit (1)
   m_TagString: unit
@@ -126,22 +126,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &4496264458555330900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4496264458555330898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc5481b7e7c5a494190bfe5e9705374f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gridController: {fileID: 0}
-  agentRB: {fileID: 4496264458555330903}
-  flowFieldSpeed: 1
-  rotation_speed: 22.17
 --- !u!114 &-8934450350225043651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,3 +157,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   setTrigger: 0
   inIdleMovementMaterial: {fileID: 0}
+  closestPoint: {x: 0, y: 0}
+  readyForOrbit: 0
+--- !u!114 &-1137817185179290080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4496264458555330898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3588cda8f0f54664b898c9efccc7d4ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridController: {fileID: 0}
+  agentRB: {fileID: 4496264458555330903}
+  flowFieldSpeed: 1
+  maxTransitionSpeed: 2
+  rotation_speed: 1

@@ -30,17 +30,17 @@ public class TransitionMovement : MonoBehaviour
         
         if (gridController.currentFlowField == null || unitState.currentStateInt == UnitState.uState.calculatingIdle) { return; }
 
-        if (Vector2.Distance(gridController.worldPosition, agentRB.position + agentRB.velocity) < 1) // might want to chage later
+        if (Vector2.Distance(gridController.worldPosition, agentRB.position + agentRB.velocity) < 1 && UnitState.uState.transition == unitState.currentStateInt) // might want to chage later
         {
-
+            
             unitState.SetState(UnitState.uState.calculatingIdle);
-            Debug.Log("set calc idle");
+            
 
         }
 
         if (unitState.currentStateInt == UnitState.uState.transition)
         {
-            Debug.Log("T");
+            
             Cell cellBelow = gridController.currentFlowField.GetCellFromWorldPos(agentRB.position);
             Vector2 moveDirection = new Vector2(cellBelow.bestDirection.Vector.x, cellBelow.bestDirection.Vector.y);
             agentRB.AddForce(moveDirection * flowFieldSpeed);

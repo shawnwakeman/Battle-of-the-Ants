@@ -8,8 +8,8 @@ public class IdleMovement : MonoBehaviour
     public GridController gridController;
     public Rigidbody2D agentRB;
     public UnitState unitState;
-    private float x_vel;
-    private float y_vel;
+    private float xVelocity;
+    private float yVelocity;
     public float speed;
     public float rotation_speed;
     
@@ -21,6 +21,8 @@ public class IdleMovement : MonoBehaviour
     private Vector3 destanation;
     private Vector2 ant;
     private Vector2 ant_destination;
+
+    private float radius;
 
     private float angle;
 
@@ -36,32 +38,37 @@ public class IdleMovement : MonoBehaviour
         if (unitState.currentStateInt == UnitState.uState.calculatingIdle)
         {
             Debug.Log("running calc idle");
+            angle = Mathf.Atan2(agentRB.position.y - gridController.worldPosition.y, agentRB.position.x - gridController.worldPosition.x);
+            // Debug.Log(angle);
+            // Debug.Log(angle * Mathf.Rad2Deg);
             // Debug.Log(Vector2.Distance(gridController.worldPosition, agentRB.position));
             // Debug.Log(agentRB.position);
             // Debug.Log(gridController.worldPosition);
-            angle = Mathf.Atan2(agentRB.position.y - gridController.worldPosition.y, agentRB.position.x - gridController.worldPosition.x);
+            radius = Vector2.Distance(gridController.worldPosition, agentRB.position);
             unitState.currentStateInt = UnitState.uState.idle;
 
 
         }
         if (unitState.currentStateInt == UnitState.uState.idle)
         {
-            Debug.Log("idle");
+            Debug.Log("getting called");
             MoveTowardsPoint();
         }
     }
     private void MoveTowardsPoint()
     {
 
-
-        Vector2 triangle_vectors = new((gridController.worldPosition.x - transform.position.x), (gridController.worldPosition.y - transform.position.y));
-        x_vel = triangle_vectors.x / speed;
-        y_vel = triangle_vectors.y / speed;
+        float targetPosX = (Mathf.Cos(angle) * radius) + gridController.worldPosition.x;
+        float targetPosY = (Mathf.Sin(angle) * radius) + gridController.worldPosition.y;
+        Debug.Log(angle);
+        Vector2 triangle_vectors = new((targetPosX - transform.position.x), (targetPosY - transform.position.y));
+        xVelocity = triangle_vectors.x / speed;
+        yVelocity = triangle_vectors.y / speed;
 
 
 
         ant = new(transform.position.x, transform.position.y);
-        ant_destination = new(gridController.worldPosition.x, gridController.worldPosition.y);
+        ant_destination = new(targetPosX, targetPosY);
         target_angle = AngleBetweenVector2(ant_destination, ant);
 
 
@@ -69,19 +76,16 @@ public class IdleMovement : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, 0, target_angle), rotation_speed * Time.deltaTime);
         // transform.rotation = Quaternion.Euler(0,0, display_angle);
 
-        Vector2 vels = new(x_vel, y_vel);
+        Vector2 vels = new(xVelocity, yVelocity);
         Vector2 pos = transform.position;
 
 
-        if (Vector2.Distance(transform.position, ant_destination) < 1)
-        {
-            transform.position = Vector2.Lerp(transform.position, ant_destination, lerp_speed * Time.deltaTime);
-        }
-        else
-        {
-            transform.position = Vector2.MoveTowards(transform.position, ant_destination, speed * Time.deltaTime);
 
-        }
+        transform.position = Vector2.MoveTowards(transform.position, ant_destination, speed * Time.deltaTime);
+
+        
+
+        angle += .001f;
 
 
     }

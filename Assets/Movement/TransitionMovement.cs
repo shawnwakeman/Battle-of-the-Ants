@@ -15,15 +15,20 @@ public class TransitionMovement : MonoBehaviour
     
     private void FixedUpdate() 
     {
+
         FlowFieldMovment();
 
     }
 
     private void Update() 
     {
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0,0,
+        if (unitState.currentStateInt == UnitState.uState.transition)
+        {
+             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0,0,
                                              AngleBetweenVector2(agentRB.position, agentRB.position + agentRB.velocity)), rotation_speed * Time.deltaTime);
         
+        }
+      
     }
     public void FlowFieldMovment()
     {

@@ -12,7 +12,7 @@ public class IdleMovement : MonoBehaviour
     private float yVelocity;
     public float speed;
     public float rotation_speed;
-    
+    public float radRotaition = .001f;
     public float lerp_speed;
 
     private Vector3 intended_pos;
@@ -85,7 +85,7 @@ public class IdleMovement : MonoBehaviour
 
         
 
-        angle += .001f;
+        angle += radRotaition;
 
 
     }
@@ -104,32 +104,7 @@ public class IdleMovement : MonoBehaviour
      }
 
 
-    //     public void orbit(float radius)
-    // {
 
-    //     if (flowFieldSteer.setInitalAngle == false)
-    //     {
-    //         flowFieldSteer.angle = AngleBetweenVector20(agentRB.position, gridController.worldPosition);
-    //         flowFieldSteer.angle = Mathf.Abs(flowFieldSteer.angle);
-    //         flowFieldSteer.setInitalAngle = true;
-            
-
-
-    //     }
-    //     else
-    //     {
-    //         float x = radius * Mathf.Cos(flowFieldSteer.angle) + gridController.worldPosition.x;
-    //         float y = radius * Mathf.Sin(flowFieldSteer.angle) + gridController.worldPosition.y;
-
-    //         flowFieldSteer.angle += -1 * Time.deltaTime;
-
-    //         // Apply the force to the Rigidbody2D
-    //         agentRB.MovePosition(new Vector2(x, y));
-         
-    //     }
-
-
-    // }
 }
 
 

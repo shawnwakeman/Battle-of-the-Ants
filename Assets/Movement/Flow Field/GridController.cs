@@ -39,7 +39,7 @@ public class GridController : MonoBehaviour
             currentFlowField.CreateIntegrationField(destinationCell);
 
             currentFlowField.CreateFlowField();
-
+            
 
 
 

@@ -159,8 +159,8 @@ MonoBehaviour:
   gridController: {fileID: 0}
   agentRB: {fileID: 4496264458555330903}
   unitState: {fileID: -5720519171341835443}
-  speed: 2
-  rotation_speed: 2
+  speed: 0.47
+  rotation_speed: 0.8
   lerp_speed: 2
 --- !u!114 &-1137817185179290080
 MonoBehaviour:
@@ -192,5 +192,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d59b0f1bc82a3a42a2f58eaaaa67c8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridController: {fileID: 0}
+  rotationDistance: 0
   currentStateInt: 1

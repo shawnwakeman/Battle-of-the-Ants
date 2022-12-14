@@ -28,8 +28,13 @@ public class MovementManager : MonoBehaviour
 
     void Update()
     {
-
-
+        if (Input.GetMouseButtonDown(0))
+        {
+            foreach (GameObject unit in unitList)
+            {
+                unit.GetComponent<UnitState>().currentStateInt = UnitState.uState.transition;
+            }
+        }
         InstantiateNewUnit();
     }
 

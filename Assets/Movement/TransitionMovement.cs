@@ -15,6 +15,7 @@ public class TransitionMovement : MonoBehaviour
     
     private void FixedUpdate() 
     {
+
         FlowFieldMovment();
 
     }
@@ -23,11 +24,19 @@ public class TransitionMovement : MonoBehaviour
     {
         if (unitState.currentStateInt == UnitState.uState.transition)
         {
+<<<<<<< HEAD
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0,0,
                                              AngleBetweenVector2(agentRB.position, agentRB.position + agentRB.velocity)), rotation_speed * Time.deltaTime);
             
         }
 
+=======
+             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0,0,
+                                             AngleBetweenVector2(agentRB.position, agentRB.position + agentRB.velocity)), rotation_speed * Time.deltaTime);
+        
+        }
+      
+>>>>>>> 54e96fc16186b3f7ce87a4f27b5c04403d32191d
     }
     public void FlowFieldMovment()
     {

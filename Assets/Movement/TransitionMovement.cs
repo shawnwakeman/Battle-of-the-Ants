@@ -24,26 +24,18 @@ public class TransitionMovement : MonoBehaviour
     {
         if (unitState.currentStateInt == UnitState.uState.transition)
         {
-<<<<<<< HEAD
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0,0,
                                              AngleBetweenVector2(agentRB.position, agentRB.position + agentRB.velocity)), rotation_speed * Time.deltaTime);
             
         }
 
-=======
-             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0,0,
-                                             AngleBetweenVector2(agentRB.position, agentRB.position + agentRB.velocity)), rotation_speed * Time.deltaTime);
-        
-        }
-      
->>>>>>> 54e96fc16186b3f7ce87a4f27b5c04403d32191d
     }
     public void FlowFieldMovment()
     {
         
         if (gridController.currentFlowField == null || unitState.currentStateInt == UnitState.uState.calculatingIdle) { return; }
 
-        if (Vector2.Distance(gridController.worldPosition, agentRB.position + agentRB.velocity) < 1 && UnitState.uState.transition == unitState.currentStateInt) // might want to chage later
+        if (Vector2.Distance(gridController.worldPosition, agentRB.position) < unitState.orbitLevel && UnitState.uState.transition == unitState.currentStateInt) // might want to chage later
         {
             
             unitState.SetState(UnitState.uState.calculatingIdle);

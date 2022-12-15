@@ -17,7 +17,7 @@ public class IdleMovement : MonoBehaviour
     private float yVelocity;
     public float speed;
     public float rotation_speed;
-    public float radRotaition = .001f;
+    public float radRotation;
     public float lerp_speed;
 
     private Vector3 intended_pos;
@@ -26,14 +26,16 @@ public class IdleMovement : MonoBehaviour
     private Vector3 destanation;
     private Vector2 ant;
     private Vector2 ant_destination;
-
+    private float rotationVariation;
     private float radius;
 
+    
     private float angle;
 
     private void Start() 
     {
         ant_destination = transform.position;
+        rotationVariation = Random.Range(-.001f,.003f);
     }
 
 
@@ -48,9 +50,13 @@ public class IdleMovement : MonoBehaviour
             // Debug.Log(angle * Mathf.Rad2Deg);
             // Debug.Log(Vector2.Distance(gridController.worldPosition, agentRB.position));
             // Debug.Log(agentRB.position);
-            // Debug.Log(gridController.worldPosition);
+            
             GetRotationDirection(agentRB.position, gridController.worldPosition);
             radius = Vector2.Distance(gridController.worldPosition, agentRB.position);
+            if (radius < unitState.orbitLevel)
+            {
+                radius = unitState.orbitLevel;
+            }
             unitState.currentStateInt = UnitState.uState.idle;
 
 
@@ -71,6 +77,7 @@ public class IdleMovement : MonoBehaviour
     private void MoveTowardsPoint()
     {
 
+        agentRB.velocity *= .995f;
         targetPosX = (Mathf.Cos(angle) * radius) + gridController.worldPosition.x;
         targetPosY = (Mathf.Sin(angle) * radius) + gridController.worldPosition.y;
         Debug.Log(angle);
@@ -81,13 +88,13 @@ public class IdleMovement : MonoBehaviour
         
 
         ant = new(transform.position.x, transform.position.y);
-        ant_destination = new(targetPosX, targetPosY);
+        ant_destination = new(transform.position.x + xVelocity, transform.position.y + yVelocity);
         target_angle = AngleBetweenVector2(ant_destination, ant) + 90;
 
         transform.rotation = Quaternion.Slerp(transform.rotation,
                                              Quaternion.Euler(0, 0, target_angle), rotation_speed * Time.deltaTime);
 
-
+        
         // transform.rotation = Quaternion.Euler(0, 0, target_angle);
         // transform.rotation = Quaternion.Euler(0,0, display_angle);
 
@@ -96,11 +103,11 @@ public class IdleMovement : MonoBehaviour
 
         
 
-        transform.position = Vector2.MoveTowards(transform.position, ant_destination, speed * Time.deltaTime);
-
+        transform.position = Vector2.Lerp(transform.position, ant_destination, speed * Time.deltaTime);
+        
         
 
-        angle += .001f * rotationAroundCircleSign;
+        angle += (radRotation * rotationAroundCircleSign) + rotationVariation;
 
 
 

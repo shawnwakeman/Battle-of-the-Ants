@@ -120,13 +120,13 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 1
-  m_AngularDrag: 0
+  m_AngularDrag: 4.29
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &-8934450350225043651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,8 +159,12 @@ MonoBehaviour:
   gridController: {fileID: 0}
   agentRB: {fileID: 4496264458555330903}
   unitState: {fileID: -5720519171341835443}
-  speed: 0.47
-  rotation_speed: 0.8
+  rotationAroundCircleSign: 0
+  targetPosX: 0
+  targetPosY: 0
+  speed: 3.28
+  rotation_speed: 2.5
+  radRotation: 0.004
   lerp_speed: 2
 --- !u!114 &-1137817185179290080
 MonoBehaviour:
@@ -193,4 +197,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationDistance: 0
+  orbitLevel: 0
   currentStateInt: 1

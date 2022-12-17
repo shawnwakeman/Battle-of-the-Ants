@@ -23,13 +23,25 @@ namespace PathCreation.Examples {
         {
             waypoints = selectionState.arrayOfTransforms;
             if (waypoints != null) {
-                if (waypoints.Length > 0)
+                if (waypoints.Length > 1)
                 {
                     // Create a new bezier path from the waypoints.
                     bezierPath = new BezierPath (waypoints, closedLoop, PathSpace.xyz);
                     GetComponent<PathCreator> ().bezierPath = bezierPath;        
                                 
                 }
+            }
+            if (selectionState.currentState == SelectionState.sState.justStartedSelection)
+            {
+                
+                bezierPath = null;
+                selectionState.arrayOfTransforms = null;
+                waypoints = null;
+                foreach (Transform transfromToBeDestroyed in selectionState.transforms)
+                {
+                    Destroy(transfromToBeDestroyed.gameObject);
+                }
+                selectionState.transforms.Clear();
             }       
         }
     }

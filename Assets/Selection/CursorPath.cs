@@ -19,7 +19,11 @@ public class CursorPath : MonoBehaviour
     Vector3 currentWorldPos;
 
     public Vector2 totalDistanceVector;
+
+    public Vector2 startingPoint;
+    public Vector2 finishingPoint;
     public Vector2 pointToBeAdded;
+
 
     private void Start() 
     {
@@ -31,9 +35,9 @@ public class CursorPath : MonoBehaviour
     {
         if(selectionState.currentState == SelectionState.sState.justStartedSelection)
         {
-            futurePoints.Clear();
             totalDistanceVector = Vector2.zero;
             SetStartTransfrom();
+            startingPoint = currentWorldPos;
             trailRenderer.emitting = false;
             
         }
@@ -53,6 +57,7 @@ public class CursorPath : MonoBehaviour
         }
         else if (selectionState.currentState == SelectionState.sState.finishedSelecting)
         {
+            finishingPoint = currentWorldPos;
             if (futurePoints.Count > 0)
             {
                 ConvertVector2ToTransfrom();
@@ -91,12 +96,10 @@ public class CursorPath : MonoBehaviour
             {
                 GameObject transfromObject = Instantiate(transformprefab, new Vector3(item.x, item.y, 0), Quaternion.Euler(0, 0, 0));
                 intemTransformlist.Add(transfromObject);
-                selectionState.SetTransforms(intemTransformlist);
             }
-            // foreach(GameObject transforms in intemTransformlist)
-            // {
-            //     Destroy(transforms);
-            // }            
+            selectionState.SetTransforms(intemTransformlist);
+            intemTransformlist.Clear();
+            futurePoints.Clear();      
         }
 
     }

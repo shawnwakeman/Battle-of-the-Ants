@@ -11,8 +11,9 @@ public class CursorPath : MonoBehaviour
     public SelectionState selectionState;
     public Rigidbody2D cursorRB;
     public TrailRenderer trailRenderer;
+    public PolygonCollider2D polygonCollider2D;
+    public float pointPollingRate;
     public List<Vector2> futurePoints = new List<Vector2>();
-    public PolygonCollider2D edgeCollider2D;
     Vector3 currentWorldPos;
     Vector2 startingPoint;
     Vector2 finishingPoint;
@@ -29,7 +30,7 @@ public class CursorPath : MonoBehaviour
     {
         if(selectionState.currentState == SelectionState.sState.justStartedSelection)
         {
-
+            futurePoints.Clear();
             SetStartTransfrom();
             startingPoint = currentWorldPos;
             trailRenderer.emitting = false;
@@ -51,8 +52,7 @@ public class CursorPath : MonoBehaviour
             finishingPoint = currentWorldPos;
             if (futurePoints.Count > 1)
             {
-                edgeCollider2D.points = futurePoints.ToArray();
-                futurePoints.Clear();
+                polygonCollider2D.points = futurePoints.ToArray();
             }
             trailRenderer.emitting = false;
             pointToBeAdded = Vector2.zero;
@@ -91,7 +91,7 @@ public class CursorPath : MonoBehaviour
                     futurePoints.Add(new Vector2(currentWorldPos.x, currentWorldPos.y));
                 }
             }
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(pointPollingRate);
         }
     }
 

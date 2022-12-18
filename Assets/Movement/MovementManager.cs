@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MovementManager : MonoBehaviour
 {
-    public List<GameObject> unitList = new List<GameObject>();
+    public List<GameObject> activeList = new List<GameObject>();
     public GridController gridController;
     public GameObject unitPrefab;
 
@@ -16,11 +16,11 @@ public class MovementManager : MonoBehaviour
         {
             if (unit.tag == "unit")
             {
-                unitList.Add(unit.gameObject);
+                activeList.Add(unit.gameObject);
             }
         }
 
-        foreach (GameObject unit in unitList)
+        foreach (GameObject unit in activeList)
         {
             Debug.Log(unit);
         }
@@ -30,7 +30,7 @@ public class MovementManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            foreach (GameObject unit in unitList)
+            foreach (GameObject unit in activeList)
             {
                 unit.GetComponent<UnitState>().currentStateInt = UnitState.uState.transition;
             }
@@ -51,7 +51,7 @@ public class MovementManager : MonoBehaviour
             newUnit.GetComponent<IdleMovement>().gridController = gridController;
             newUnit.GetComponent<TransitionMovement>().gridController = gridController;
             newUnit.transform.parent = gameObject.transform;
-            unitList.Add(newUnit);
+            activeList.Add(newUnit);
 
         }
     }

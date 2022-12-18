@@ -140,7 +140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &479656384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,7 +173,7 @@ MonoBehaviour:
       - 0
       globalNormalsAngle: 0
       flipNormals: 0
-    vertexPathUpToDate: 1
+    vertexPathUpToDate: 0
     vertexPathMaxAngleError: 0.3
     vertexPathMinVertexSpacing: 0.01
     showTransformTool: 1
@@ -208,7 +208,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   closedLoop: 1
   waypoints: []
-  selectionState: {fileID: 1276993303}
 --- !u!4 &479656386
 Transform:
   m_ObjectHideFlags: 0
@@ -222,7 +221,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
@@ -537,7 +536,7 @@ Transform:
   m_Children:
   - {fileID: 579045088}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &633830652
 GameObject:
@@ -620,7 +619,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!96 &888780908
 TrailRenderer:
@@ -635,12 +634,12 @@ TrailRenderer:
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
-  m_MotionVectors: 0
+  m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
@@ -655,7 +654,7 @@ TrailRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -673,20 +672,29 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.1428566
+        value: 0.484375
         inSlope: 0
         outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0.16470587, g: 0.47597936, b: 1, a: 1}
+      key1: {r: 0.7216981, g: 0.89121073, b: 1, a: 0}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -713,10 +721,10 @@ TrailRenderer:
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
-    numCapVertices: 0
+    numCapVertices: 8
     alignment: 0
     textureMode: 0
-    shadowBias: 0.5
+    shadowBias: 0
     generateLightingData: 0
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
@@ -822,20 +830,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b81ea81813c36a4880a2113da48e467, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 25
+  pointCreationDistance: 0.5
   selectionState: {fileID: 1276993303}
   cursorRB: {fileID: 888780911}
-  speed: 25
   trailRenderer: {fileID: 888780908}
   futurePoints: []
   edgeCollider2D: {fileID: 1441767150}
-  stopSelectingDistance: 3
-  transformprefab: {fileID: 3518048808576975196, guid: f38d64e74e88d9e4882feeef30b3faae, type: 3}
-  intemTransformlist: []
-  totalDistanceVector: {x: 0, y: 0}
-  startingPoint: {x: 0, y: 0}
-  finishingPoint: {x: 0, y: 0}
-  pointToBeAdded: {x: 0, y: 0}
-  pointCreationDistance: 0.5
 --- !u!68 &888780913
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -935,8 +936,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38d3e3c611a8b8542bf6bd012fc5a8e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transforms: []
-  arrayOfTransforms: []
   currentState: 3
 --- !u!4 &1276993304
 Transform:
@@ -951,7 +950,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1441767145
 GameObject:
@@ -985,7 +984,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1441767148
 MonoBehaviour:
@@ -999,6 +998,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ef817a5320d50f458257deae96f99c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overlappingColliders: []
 --- !u!68 &1441767149
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -1051,37 +1051,6 @@ PolygonCollider2D:
       - {x: -0.5877852, y: -0.80901706}
       - {x: 0.58778536, y: -0.80901694}
       - {x: 0.9510565, y: 0.30901712}
---- !u!1 &1625322551
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1625322552}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1625322552
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1625322551}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.161213, y: 5.2188344, z: -0.04109695}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1682293746
 GameObject:
   m_ObjectHideFlags: 0
@@ -1100,7 +1069,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1682293747
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1289,7 +1258,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1939328926
 GameObject:

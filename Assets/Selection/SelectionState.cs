@@ -49,7 +49,6 @@ public class SelectionState : MonoBehaviour
         {
             Transform transformToAdd = transfromObject.transform;
             transforms.Add(transformToAdd);
-            Debug.Log(transformToAdd);
         }
 
         arrayOfTransforms = transforms.ToArray();

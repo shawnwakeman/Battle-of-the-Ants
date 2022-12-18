@@ -27,7 +27,8 @@ namespace PathCreation.Examples {
                 {
                     // Create a new bezier path from the waypoints.
                     bezierPath = new BezierPath (waypoints, closedLoop, PathSpace.xyz);
-                    GetComponent<PathCreator> ().bezierPath = bezierPath;        
+                    GetComponent<PathCreator> ().bezierPath = bezierPath;   
+                     
                                 
                 }
             }

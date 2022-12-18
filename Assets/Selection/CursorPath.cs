@@ -13,6 +13,9 @@ public class CursorPath : MonoBehaviour
 
     public List<Vector2> futurePoints = new List<Vector2>();
 
+    public PolygonCollider2D edgeCollider2D;
+
+    public float stopSelectingDistance;
     public GameObject transformprefab;
     // Update is called once per frame
     public List<GameObject> intemTransformlist = new List<GameObject>();
@@ -25,6 +28,9 @@ public class CursorPath : MonoBehaviour
     public Vector2 pointToBeAdded;
 
 
+    public float pointCreationDistance;
+
+
     private void Start() 
     {
 
@@ -33,7 +39,7 @@ public class CursorPath : MonoBehaviour
     }
     void Update()
     {
-        if(selectionState.currentState == SelectionState.sState.justStartedSelection)
+        if(selectionState.currentState == SelectionState.sState.justStartedSelection && disableImput == false)
         {
             totalDistanceVector = Vector2.zero;
             SetStartTransfrom();
@@ -41,7 +47,7 @@ public class CursorPath : MonoBehaviour
             trailRenderer.emitting = false;
             
         }
-        else if (selectionState.currentState == SelectionState.sState.currentlySelecting)
+        else if (selectionState.currentState == SelectionState.sState.currentlySelecting && disableImput == false)
         {
             trailRenderer.emitting = true;
             trailRenderer.time = 5;
@@ -51,11 +57,13 @@ public class CursorPath : MonoBehaviour
             {
                 futurePoints.Clear();
             }
+            Vector2 closestPoint = Vector2.zero;
+
 
 
 
         }
-        else if (selectionState.currentState == SelectionState.sState.finishedSelecting)
+        else if (selectionState.currentState == SelectionState.sState.finishedSelecting && disableImput == false)
         {
             finishingPoint = currentWorldPos;
             if (futurePoints.Count > 0)
@@ -64,7 +72,6 @@ public class CursorPath : MonoBehaviour
             }
             trailRenderer.emitting = false;
             pointToBeAdded = Vector2.zero;
-            Debug.Log("c");
 
         }
         else // idling
@@ -74,7 +81,6 @@ public class CursorPath : MonoBehaviour
             trailRenderer.time = .5f;
         }
     }
-
 
     void speedLimiter(Rigidbody2D agentRB)
     {
@@ -110,12 +116,28 @@ public class CursorPath : MonoBehaviour
         {
             if (pointToBeAdded != Vector2.zero)
             {
-                futurePoints.Add(new Vector2(currentWorldPos.x, currentWorldPos.y));
-            }
-            yield return new WaitForSeconds(1f);
+                if (futurePoints.Count > 0 && Vector2.Distance(pointToBeAdded, futurePoints[^1]) > pointCreationDistance)
+                {
+                    // Debug.Log(Vector2.Distance(pointToBeAdded, futurePoints[^1]));
+                    futurePoints.Add(new Vector2(currentWorldPos.x, currentWorldPos.y));
+                    edgeCollider2D.points = futurePoints.ToArray();
 
-            // Put the code you want to run every 1 second here
-            Debug.Log("Running coroutine");
+
+                }
+                else if (futurePoints.Count == 0)
+                {
+                    // Debug.Log(Vector2.Distance(pointToBeAdded, futurePoints[^1]));
+                    edgeCollider2D.points = futurePoints.ToArray();
+                    futurePoints.Add(new Vector2(currentWorldPos.x, currentWorldPos.y));
+                    // List<Vector2> colliderPoints = new List<Vector2>(edgeCollider2D.points); // needs to be optimized
+                    // colliderPoints.Add(pointToBeAdded);
+                    // edgeCollider2D.points =  colliderPoints.ToArray();
+
+                }
+
+            }
+            yield return new WaitForSeconds(0.15f);
+
         }
     }
 
@@ -145,8 +167,10 @@ public class CursorPath : MonoBehaviour
         var dir = currentWorldPos - transform.position;
         cursorRB.velocity = (dir * speed);
         totalDistanceVector += new Vector2(Mathf.Abs(cursorRB.velocity.x), Mathf.Abs(cursorRB.velocity.y));
-        speedLimiter(cursorRB);    
+        speedLimiter(cursorRB);
     }
+
+
 }   
 
 

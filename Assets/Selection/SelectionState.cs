@@ -6,8 +6,6 @@ public class SelectionState : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public List<Transform> transforms = new List<Transform>();
-    public Transform[] arrayOfTransforms;
     public sState currentState = sState.idle;
     public enum sState
     {
@@ -41,20 +39,4 @@ public class SelectionState : MonoBehaviour
             currentState = sState.idle;
         }
     }
-
-
-    public void SetTransforms(List<GameObject> transformList)
-    {
-        foreach (GameObject transfromObject in transformList)
-        {
-            Transform transformToAdd = transfromObject.transform;
-            transforms.Add(transformToAdd);
-        }
-
-        arrayOfTransforms = transforms.ToArray();
-
-    }
-
-
-
 }

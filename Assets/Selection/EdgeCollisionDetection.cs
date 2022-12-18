@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class EdgeCollisionDetection : MonoBehaviour
 {
-    List<Collider2D> triggerList = new List<Collider2D>();
+    public List<Collider2D> overlappingColliders = new List<Collider2D>();
 
-    private void Update() 
-    {
-        Debug.Log(triggerList.Count);
-    }
-    private void OnTriggerStay2D(Collider2D other) 
-    {
-        
+    private void OnTriggerEnter2D(Collider2D collider) {
+        if(!overlappingColliders.Contains(collider)) {
+            overlappingColliders.Add(collider);
+            Debug.Log(collider.gameObject.name);
+        }
     }
 
 

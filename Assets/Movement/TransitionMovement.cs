@@ -33,7 +33,7 @@ public class TransitionMovement : MonoBehaviour
     public void FlowFieldMovment()
     {
         
-        if (gridController.currentFlowField == null || unitState.currentStateInt == UnitState.uState.calculatingIdle) { return; }
+        if (gridController == null || unitState.currentStateInt == UnitState.uState.calculatingIdle) { return; }
 
         if (Vector2.Distance(gridController.worldPosition, agentRB.position) < unitState.orbitLevel && UnitState.uState.transition == unitState.currentStateInt) // might want to chage later
         {

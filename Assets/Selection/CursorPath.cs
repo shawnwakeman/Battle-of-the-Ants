@@ -34,10 +34,11 @@ public class CursorPath : MonoBehaviour
             SetStartTransfrom();
             startingPoint = currentWorldPos;
             trailRenderer.emitting = false;
-            
+
         }
         else if (selectionState.currentState == SelectionState.sState.currentlySelecting)
         {
+
             trailRenderer.emitting = true;
             trailRenderer.time = 5;
             UpdateCursorMovement();
@@ -90,6 +91,7 @@ public class CursorPath : MonoBehaviour
                 {
                     futurePoints.Add(new Vector2(currentWorldPos.x, currentWorldPos.y));
                 }
+                
             }
             yield return new WaitForSeconds(pointPollingRate);
         }

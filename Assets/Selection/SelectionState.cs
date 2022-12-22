@@ -57,6 +57,7 @@ public class SelectionState : MonoBehaviour
             if (timeafterclick > clickHoldThreshold)
             {
                 Debug.Log("Being Held");
+                // can be used to count clicks
                 
             }
         }

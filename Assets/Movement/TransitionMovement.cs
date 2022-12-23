@@ -6,6 +6,7 @@ public class TransitionMovement : MonoBehaviour
 {
     public GridController gridController;
 
+    public GameObject party;
     public UnitState unitState;
     public Rigidbody2D agentRB;
     public float flowFieldSpeed;
@@ -35,13 +36,14 @@ public class TransitionMovement : MonoBehaviour
         
         if (gridController == null || unitState.currentStateInt == UnitState.uState.calculatingIdle) { return; }
 
-        if (Vector2.Distance(gridController.worldPosition, agentRB.position) < unitState.orbitLevel && UnitState.uState.transition == unitState.currentStateInt) // might want to chage later
+        if (Vector2.Distance(gridController.worldPosition, agentRB.position) < unitState.orbitLevel)
         {
-            
-            unitState.SetState(UnitState.uState.calculatingIdle);
-            
-
+            gridController = null;
+            gameObject.transform.parent = gameObject.transform.parent.parent;
+            Debug.Log(gameObject.transform.parent.parent);
+            return;
         }
+
 
         if (unitState.currentStateInt == UnitState.uState.transition)
         {
@@ -49,7 +51,7 @@ public class TransitionMovement : MonoBehaviour
             Cell cellBelow = gridController.currentFlowField.GetCellFromWorldPos(agentRB.position);
             Vector2 moveDirection = new Vector2(cellBelow.bestDirection.Vector.x, cellBelow.bestDirection.Vector.y);
             agentRB.AddForce(moveDirection * flowFieldSpeed);
-            speedLimiter(agentRB);
+            speedLimiter(agentRB); // might want to move if needed
            
         }
 

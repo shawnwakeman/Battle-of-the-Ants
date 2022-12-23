@@ -16,34 +16,24 @@ public class GridController : MonoBehaviour
 
     public void InitializeFlowField()
     {
-        
+
         currentFlowField = new FlowField(cellRadius, gridSize);
         currentFlowField.CreateGrid();
     }
 
- 
-    void Update()
+    private void Start()
     {
-        
-        if (Input.GetMouseButtonDown(0))
-        {
-            InitializeFlowField();
-            gridDebug.SetFlowField(currentFlowField);
+        InitializeFlowField();
+        gridDebug.SetFlowField(currentFlowField);
 
-            currentFlowField.CreateCostField();
+        currentFlowField.CreateCostField();
 
-            Vector3 mousePos = Input.mousePosition;
-            mousePos.z = Camera.main.nearClipPlane;
-            worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
-            destinationCell = currentFlowField.GetCellFromWorldPos(worldPosition);
-            currentFlowField.CreateIntegrationField(destinationCell);
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = Camera.main.nearClipPlane;
+        worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
+        destinationCell = currentFlowField.GetCellFromWorldPos(worldPosition);
+        currentFlowField.CreateIntegrationField(destinationCell);
 
-            currentFlowField.CreateFlowField();
-            
-
-
-
-        }
-        
+        currentFlowField.CreateFlowField();
     }
 }

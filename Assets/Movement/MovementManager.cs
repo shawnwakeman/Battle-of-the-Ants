@@ -5,7 +5,9 @@ using UnityEngine;
 public class MovementManager : MonoBehaviour
 {
     public List<GameObject> unitList = new List<GameObject>();
-    public GridController gridController;
+    public GameObject gridControllerprefab;
+    public SelectionState selectionState;
+    public EdgeCollisionDetection edgeCollisionDetection;
     public GameObject unitPrefab;
 
 
@@ -28,13 +30,37 @@ public class MovementManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+
+
+        if (selectionState.currentState == SelectionState.sState.clickedToTarget)
         {
-            foreach (GameObject unit in unitList)
+            Vector3 mousePos = Input.mousePosition;
+            mousePos.z = Camera.main.nearClipPlane;
+            Vector3 clickWorldPos = Camera.main.ScreenToWorldPoint(mousePos);
+
+
+            GameObject newGridController = Instantiate(gridControllerprefab, transform.position, transform.rotation);
+            newGridController.transform.parent = gameObject.transform;
+            GridController gridObject = newGridController.GetComponent<GridController>();
+            gridObject.worldPosition = clickWorldPos;
+            foreach (Collider2D item in edgeCollisionDetection.overlappingColliders)
             {
-                unit.GetComponent<UnitState>().currentStateInt = UnitState.uState.transition;
+                item.transform.parent = newGridController.transform;
+                item.gameObject.GetComponent<IdleMovement>().gridController = gridObject;
+                item.gameObject.GetComponent<TransitionMovement>().gridController = gridObject;
             }
+
+            selectionState.currentState = SelectionState.sState.idle;
+
         }
+        
+        // if (Input.GetMouseButtonDown(0))
+        // {
+        //     foreach (GameObject unit in unitList)
+        //     {
+        //         unit.GetComponent<UnitState>().currentStateInt = UnitState.uState.transition;
+        //     }
+        // }
         InstantiateNewUnit();
     }
 

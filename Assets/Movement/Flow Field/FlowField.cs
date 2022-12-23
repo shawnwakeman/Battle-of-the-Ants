@@ -147,5 +147,6 @@ public class FlowField
         x = Mathf.Ceil(x);
         y = Mathf.Ceil(y);
         return grid[(int)x-1, (int)y-1];
+
     }
 }

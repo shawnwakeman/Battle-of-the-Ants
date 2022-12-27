@@ -44,7 +44,6 @@ public class IdleMovement : MonoBehaviour
 
         if (unitState.currentStateInt == UnitState.uState.calculatingIdle)
         {
-            Debug.Log("running calc idle");
             angle = Mathf.Atan2(agentRB.position.y - gridController.worldPosition.y, agentRB.position.x - gridController.worldPosition.x);
             // Debug.Log(angle);
             // Debug.Log(angle * Mathf.Rad2Deg);
@@ -63,7 +62,6 @@ public class IdleMovement : MonoBehaviour
         }
         if (unitState.currentStateInt == UnitState.uState.idle)
         {
-            Debug.Log("getting called");
             // agentRB.isKinematic = true;
             MoveTowardsPoint();
         }
@@ -80,7 +78,6 @@ public class IdleMovement : MonoBehaviour
         agentRB.velocity *= .995f;
         targetPosX = (Mathf.Cos(angle) * radius) + gridController.worldPosition.x;
         targetPosY = (Mathf.Sin(angle) * radius) + gridController.worldPosition.y;
-        Debug.Log(angle);
         Vector2 triangle_vectors = new((targetPosX - transform.position.x), (targetPosY - transform.position.y));
         xVelocity = triangle_vectors.x / speed;
         yVelocity = triangle_vectors.y / speed;

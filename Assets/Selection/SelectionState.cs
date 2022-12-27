@@ -14,6 +14,7 @@ public class SelectionState : MonoBehaviour
     public bool PrimedOnce;
     public bool clicked;
     public EdgeCollisionDetection edgeCollisionDetection;
+    public int curretMouseButton;
     public enum sState
 
     {
@@ -37,6 +38,7 @@ public class SelectionState : MonoBehaviour
     private void Start() 
     {
         edgeCollisionDetection = polygonCollider2D.GetComponent<EdgeCollisionDetection>();
+        
     }
 
     private void Update()
@@ -46,28 +48,28 @@ public class SelectionState : MonoBehaviour
 
     void DetermineSelectionState()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(curretMouseButton))
         {
             currentState = SelectionState.sState.justStartedSelection;
         }
-        else if (Input.GetMouseButton(0))
+        else if (Input.GetMouseButton(curretMouseButton))
         {
             currentState = sState.currentlySelecting;
             timeafterclick += Time.deltaTime;
             if (timeafterclick > clickHoldThreshold)
             {
-                Debug.Log("Being Held");
+                // Debug.Log("Being Held");
                 // can be used to count clicks
                 
             }
         }
-        else if (Input.GetMouseButtonUp(0))
+        else if (Input.GetMouseButtonUp(curretMouseButton))
         {
             currentState = sState.finishedSelecting;
             
             if (timeafterclick < clickHoldThreshold)
             {
-                Debug.Log("ClickedNotHeld");
+                // Debug.Log("ClickedNotHeld");
                 if (currentIState == iState.primedForTarget)
                 {
                     currentState = sState.clickedToTarget;
@@ -106,103 +108,3 @@ public class SelectionState : MonoBehaviour
 
 }
 
-
-// using System.Collections;
-// using System.Collections.Generic;
-// using UnityEngine;
-
-// public class SelectionState : MonoBehaviour
-// {
-//     // Start is called before the first frame update
-//     public PolygonCollider2D polygonCollider2D;
-//     public CursorPath cursorPath;
-//     public sState currentState = sState.idle;
-//     public bool PrimedOnce;
-//     public bool clickedAfterPrime;
-//     public EdgeCollisionDetection edgeCollisionDetection;
-//     public enum sState
-
-//     {
-//         justStartedSelection,
-//         currentlySelecting,
-//         finishedSelecting,
-//         idle,
-//         primedForTarget,
-//         clickedToTarget,    
-
-//     }
-    
-//     private void Start() 
-//     {
-//         edgeCollisionDetection = polygonCollider2D.GetComponent<EdgeCollisionDetection>();
-//     }
-
-//     private void Update()
-//     {
-//         DetermineSelectionState();
-//     }
-
-//     void DetermineSelectionState()
-//     {
-//         if(Input.GetMouseButtonDown(0))
-//         {
-//             if (currentState == sState.primedForTarget)
-//             {
-//                 clickedAfterPrime = true;
-
-//             }
-//             currentState = sState.justStartedSelection;
-//         }
-//         else if (Input.GetMouseButton(0))
-//         {
-//             currentState = sState.currentlySelecting;
-//         }
-//         else if (Input.GetMouseButtonUp(0))
-//         {
-//             List<Collider2D> checkForChanges = edgeCollisionDetection.overlappingColliders;
-//             currentState = sState.finishedSelecting;
-//             PrimedOnce = true;
-//             // if (clickedAfterPrime && CheckMatch(checkForChanges, edgeCollisionDetection.overlappingColliders) && currentState == sState.primedForTarget)
-//             // {
-//             //     currentState = sState.clickedToTarget;
-//             //     Debug.Log("was ran");
-//             //     Debug.Assert(true);
-//             // }    
-//         }
-
-//         checkForPrimedState();
-
-        
-//     }
-
-//     bool CheckMatch(List<Collider2D> checkForChanges, List<Collider2D> overlappingColliders) 
-//     {
-//         if (checkForChanges.Count != overlappingColliders.Count) { return false; }
-//         for (int i = 0; i < checkForChanges.Count; i++) 
-//         {
-//             if (checkForChanges[i] != overlappingColliders[i]) { return false; }
-//         }
-//         return true;
-//     }
-
-//     public void checkForPrimedState()
-//     {
-//         if (PrimedOnce)
-//         {
-//             if (cursorPath.futurePoints.Count > 1 &&
-//             currentState == sState.finishedSelecting && 
-//             edgeCollisionDetection.overlappingColliders.Count > 0)
-//             {
-//                 currentState = sState.primedForTarget;
-//             }
-//             else if (currentState == sState.finishedSelecting && edgeCollisionDetection.overlappingColliders.Count == 0)
-//             {
-//                 currentState = sState.idle;
-//             }    
-//         }
-
-
-//     }
-
-
-// }

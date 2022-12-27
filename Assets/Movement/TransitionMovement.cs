@@ -6,6 +6,7 @@ public class TransitionMovement : MonoBehaviour
 {
     public GridController gridController;
 
+    public Collider2D collider1;
     public GameObject party;
     public UnitState unitState;
     public Rigidbody2D agentRB;
@@ -13,24 +14,28 @@ public class TransitionMovement : MonoBehaviour
     public float maxTransitionSpeed;
     public float rotation_speed;
 
-    
-    private void FixedUpdate() 
+    private void FixedUpdate()
     {
 
         FlowFieldMovment();
-
-    }
-
-    private void Update() 
-    {
-        if (unitState.currentStateInt == UnitState.uState.transition)
+        if (gridController != null)
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0,0,
-                                             AngleBetweenVector2(agentRB.position, agentRB.position + agentRB.velocity)), rotation_speed * Time.deltaTime);
-            
+            if (Vector2.Distance(gridController.worldPosition, agentRB.position) > unitState.orbitLevel)
+            {
+                if (unitState.currentStateInt == UnitState.uState.transition || unitState.currentStateInt == UnitState.uState.inTargetRange)
+                {
+                    Quaternion angle = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, 0,
+                                                    AngleBetweenVector2(agentRB.position, agentRB.position + agentRB.velocity)), rotation_speed * Time.deltaTime);
+                    agentRB.MoveRotation(angle);
+
+                }
+                speedLimiter(agentRB);   
+                       
+            }            
         }
 
     }
+
     public void FlowFieldMovment()
     {
         
@@ -40,18 +45,17 @@ public class TransitionMovement : MonoBehaviour
         {
             gridController = null;
             gameObject.transform.parent = gameObject.transform.parent.parent;
-            Debug.Log(gameObject.transform.parent.parent);
+            unitState.intarget = UnitState.uState.inTargetRange;
             return;
         }
 
 
-        if (unitState.currentStateInt == UnitState.uState.transition)
+        if (unitState.currentStateInt == UnitState.uState.transition || unitState.currentStateInt == UnitState.uState.inTargetRange)
         {
             
             Cell cellBelow = gridController.currentFlowField.GetCellFromWorldPos(agentRB.position);
             Vector2 moveDirection = new Vector2(cellBelow.bestDirection.Vector.x, cellBelow.bestDirection.Vector.y);
             agentRB.AddForce(moveDirection * flowFieldSpeed);
-            speedLimiter(agentRB); // might want to move if needed
            
         }
 
@@ -80,7 +84,7 @@ public class TransitionMovement : MonoBehaviour
 
     private void speedLimiter(Rigidbody2D agentRB)
     {
-        if (agentRB.velocity.sqrMagnitude >= maxTransitionSpeed*maxTransitionSpeed)
+        if (Mathf.Abs(agentRB.velocity.sqrMagnitude) >= maxTransitionSpeed*maxTransitionSpeed)
         {
             agentRB.velocity = agentRB.velocity.normalized * maxTransitionSpeed;
             

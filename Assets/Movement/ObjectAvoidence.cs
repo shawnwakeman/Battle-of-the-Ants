@@ -23,8 +23,10 @@ public class ObjectAvoidence : MonoBehaviour
     
 
     /// <returns>the offset velocity to avoid objects</returns>
-    public void GetAvoidenceVelocity()
+    private void FixedUpdate() 
     {
+        
+
         
         hit = Physics2D.Raycast(agentRB.position, agentRB.velocity, 5);
         Vector2 bruh = agentRB.velocity;
@@ -57,7 +59,7 @@ public class ObjectAvoidence : MonoBehaviour
         }
 
         Debug.Log(avoidenceVelocity);
-        agentRB.velocity += avoidenceVelocity;
+        agentRB.AddForce(avoidenceVelocity);
 
 
     }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EdgeCollisionDetection : MonoBehaviour
 {
+    public string unitID;
     public List<Collider2D> overlappingColliders = new List<Collider2D>();
 
     private void Start() 
@@ -12,7 +13,7 @@ public class EdgeCollisionDetection : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collider) {
         if(!overlappingColliders.Contains(collider)) {
-            if (collider.gameObject.CompareTag("unit"))
+            if (collider.gameObject.CompareTag(unitID))
             {
                 overlappingColliders.Add(collider);
                 Debug.Log(collider.gameObject.name);                

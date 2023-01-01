@@ -8,6 +8,7 @@ TagManager:
   - ant
   - idlecollider
   - unit2
+  - hub
   layers:
   - Default
   - TransparentFX

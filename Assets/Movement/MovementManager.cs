@@ -11,6 +11,9 @@ public class MovementManager : MonoBehaviour
     [SerializeField] string unitID1;
     [SerializeField] int channel;
 
+    public GameObject newGridController;
+    public GridController gridObject;
+
 
 
 
@@ -29,18 +32,15 @@ public class MovementManager : MonoBehaviour
             Vector3 clickWorldPos = Camera.main.ScreenToWorldPoint(mousePos);
 
 
-            GameObject newGridController = Instantiate(gridControllerPrefab, transform.position, transform.rotation);
+            newGridController = Instantiate(gridControllerPrefab, transform.position, transform.rotation);
             newGridController.transform.parent = gameObject.transform;
-            GridController gridObject = newGridController.GetComponent<GridController>();
+            gridObject = newGridController.GetComponent<GridController>();
             gridObject.worldPosition = clickWorldPos;
             foreach (Collider2D item in edgeCollisionDetection.overlappingColliders)
             {
                 
                 item.transform.parent = newGridController.transform;
                 TransitionMovement transitionMovement = item.gameObject.GetComponent<TransitionMovement>();
-
-                item.gameObject.GetComponent<TransitionMovement>().gridController = gridObject;
-
                 transitionMovement.gridController = gridObject;
             }
 
@@ -50,6 +50,19 @@ public class MovementManager : MonoBehaviour
 
 
         InstantiateNewUnit();
+    }
+
+    public void MovmentMain()
+    {
+            Vector3 mousePos = Input.mousePosition;
+            mousePos.z = Camera.main.nearClipPlane;
+            Vector3 clickWorldPos = Camera.main.ScreenToWorldPoint(mousePos);
+
+
+            newGridController = Instantiate(gridControllerPrefab, transform.position, transform.rotation);
+            newGridController.transform.parent = gameObject.transform;
+            gridObject = newGridController.GetComponent<GridController>();
+            gridObject.worldPosition = clickWorldPos;
     }
 
 

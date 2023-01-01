@@ -8,8 +8,11 @@ public class Seek : MonoBehaviour
     public Rigidbody2D agentRB;
     public List<Collider2D> overlappingUnitColliders = new List<Collider2D>();
     public string enemy;
+
+    bool destructionKey;
     void Start()
     {
+        destructionKey = true;
         if (gameObject.transform.parent.CompareTag("unit"))
         {
             enemy = "unit2";
@@ -28,7 +31,11 @@ public class Seek : MonoBehaviour
         if (overlappingUnitColliders.Count > 0)
         {
             GameObject enemytarget = overlappingUnitColliders[0].gameObject;
-            Destroy(enemytarget);
+            if (destructionKey)
+            {
+                Destroy(enemytarget);
+                destructionKey = false;
+            }
         }
      
     }

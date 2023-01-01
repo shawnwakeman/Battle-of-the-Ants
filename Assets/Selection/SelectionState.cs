@@ -69,7 +69,6 @@ public class SelectionState : MonoBehaviour
             
             if (timeafterclick < clickHoldThreshold)
             {
-                // Debug.Log("ClickedNotHeld");
                 if (currentIState == iState.primedForTarget)
                 {
                     currentState = sState.clickedToTarget;
@@ -91,7 +90,7 @@ public class SelectionState : MonoBehaviour
     public void checkForPrimedState()
     {
 
-        if (edgeCollisionDetection.overlappingColliders.Count > 0)
+        if (edgeCollisionDetection.overlappingColliders.Count > 0 || edgeCollisionDetection.overlappingHubs.Count > 0)
         {
             currentIState = iState.primedForTarget;
 

@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 4496264458555330898}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.89, y: 1.89, z: 3.78}
+  m_LocalScale: {x: 1, y: 1, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1546724634229323917}
@@ -184,7 +184,6 @@ MonoBehaviour:
   rotationDistance: 0
   orbitLevel: 0.5
   intarget: 0
-  unitID: 
   currentStateInt: 1
 --- !u!1 &7166113411397446539
 GameObject:

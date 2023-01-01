@@ -108,4 +108,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridController: {fileID: 259772019504911286}
-  displayGrid: 0
+  displayGrid: 1

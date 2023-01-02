@@ -47,21 +47,26 @@ public class AntHillManager : MonoBehaviour
 
         if (selectionState.currentState == SelectionState.sState.clickedToTarget && selected)
         {
-            
+
+            movementManager.MovmentMain();
+            Vector2 offset = ((movementManager.gridObject.worldPosition - gameObject.transform.position).normalized) * 2;
+
+
+
+
             for (int i = 0; i <= antCount; i++)
-            {
-                //should use getter
-                movementManager.MovmentMain();
-                if (i > 0)
                 {
-                    GameObject item = Instantiate(unitPrefab, gameObject.transform.position + new Vector3(2, 0, 0), gameObject.transform.rotation);
-                    item.transform.parent = gameObject.transform;
-                    item.tag = unitID1;
-                    item.transform.parent = movementManager.newGridController.transform;
-                    item.gameObject.GetComponent<TransitionMovement>().gridController = movementManager.gridObject; // bad
-                    
+                    //should use getter
+                    if (i > 0)
+                    {
+                        GameObject item = Instantiate(unitPrefab, gameObject.transform.position + new Vector3(offset.x, offset.y, 0), gameObject.transform.rotation);
+                        item.transform.parent = gameObject.transform;
+                        item.tag = unitID1;
+                        item.transform.parent = movementManager.newGridController.transform;
+                        item.gameObject.GetComponent<TransitionMovement>().gridController = movementManager.gridObject; // bad
+
+                    }
                 }
-            }
             selected = false;
             antCount = 0; 
         }
